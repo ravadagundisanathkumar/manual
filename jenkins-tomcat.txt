@@ -91,45 +91,47 @@ sudo systemctl enable jenkins
 sudo systemctl start jenkins
 http://your_amazon_linux_instance_ip:8080
 cat /var/lib/jenkins/secrets/initialAdminPassword
+cd /var/lib/jenkins/workspace/
 
 #####################################################################
+DOCKER + JENKINS
+##########
+sudo su -
+hostnamectl set-hostname  docker.example.com
+bash
+yum install docker*
+systemctl start docker
+systemctl enable docker
+docker info
+docker ps
+docker run -itd --name <Name_of_container> -p 8080:8080 jenkins/jenkins
+docker ps -a
+docker exec -it <container_id> /bin/bash
+log in to <public ip-address>:8080   -- copy the directoryy
+cat <paste_directory>
+paste the password into web
 
+Add another container (add 8081 port to instance)
+docker run -itd --name <Name_of_container> -p 8080:8081 jenkins/jenkins
+docker exec -it <container_id> /bin/bash
+log in to <public ip-address>:8081   -- copy the directoryy
+cat <paste_directory>
+paste the password into web
 ########################################################################
 tomcat
 #########
-Steps to install and configure Tomcat
-Install Java on Machine
-Install Tomcat on Machine
-Add Execute Permission to startup.sh & shutdown.sh
-Create link files for Tomcat Server up and Down
-Change Settings to Manage Tomcat
-Update user information in tomcat-users.xml
-Install Java
-yum install java-1.8*
-Install Tomcat
 sudo su -
-
-cd /
-
-cd /opt
-
+yum install java*
 #Download tomcat binary
 wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.106/bin/apache-tomcat-9.0.106.tar.gz
-
 #unzip tomcat binary
 tar -zvxf apache-tomcat-9.0.55.tar.gz
 Add Execute Permission to startup.sh & shutdown.sh
 cd apache-tomcat-9.0.55
-
 cd bin
-
 chmod +x startup.sh
 chmod +x shutdown.sh
-Create link files for Tomcat Server up and Down
-ln -s /opt/apache-tomcat-9.0.55/bin/startup.sh /usr/local/bin/tomcatup
-ln -s /opt/apache-tomcat-9.0.55/bin/shutdown.sh /usr/local/bin/tomcatdown
-tomcatup
-Change Settings to Manage Tomcat
+#########
 cd apache-tomcat-9.0.55
 find -name context.xml
 ./conf/context.xml
@@ -161,3 +163,14 @@ Access Tomcat Web Interface
 http://server_ip:8080/
 
 You should see Tomcat welcome page.
+
+
+in jenkins server install plugins maven, deploy to container, github integration 
+in jenkins server 
+yum install maven
+mvn -v
+path has to add  into jenkins tools java and maven paths
+in build configure section post-build actions Deploy war/ear to a container  
+**/*.war 
+context - /
+
