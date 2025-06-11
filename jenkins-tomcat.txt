@@ -1,0 +1,129 @@
+###########################################################################################################################
+git server, client1 , client2
+#########
+git-server
+##########
+sudo su -
+passwd root
+yum install git
+hostnamectl set-hostname git-server.example.com
+bash
+vim /etc/hosts
+ping
+vim /etc/ssh/sshd_config    (remove # for "permit root login" and change value to yes and  PasswordAuthentication ,PermitEmptyPasswords to yes)
+systemctl restart sshd
+systemctl start sshd
+cd project
+git init --bare
+git log
+
+###########
+git-client1
+###########
+sudo su -
+hostnamectl set-hostname git-client.example.com
+bash
+yum install git
+ssh-keygen
+ssh-copy-id root@172.31.35.8
+vim /etc/hosts
+ping
+mkdir my-project
+cd my-project
+git init
+vim index.html
+git add .
+git commit -m "first"
+git remote add origin root@172.31.35.8:/root/project/
+git push -u origin master
+###################################################################################################################################
+
+
+
+JENKINS
+############################################################################################################################
+medium.t2
+add port number 8080
+add ssh 
+###############
+sudo su -
+hostnamectl set-hostname jenkins.example.com
+yum update -y
+yum install java-17-amazon-corretto -y
+java -version
+ssudo wget -O /etc/yum.repos.d/jenkins.repo \
+    https://pkg.jenkins.io/redhat-stable/jenkins.repo
+rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+yum install jenkins -y
+sudo systemctl enable jenkins
+sudo systemctl start jenkins
+http://your_amazon_linux_instance_ip:8080
+cat /var/lib/jenkins/secrets/initialAdminPassword
+
+########################################################################
+tomcat
+#########
+Steps to install and configure Tomcat
+Install Java on Machine
+Install Tomcat on Machine
+Add Execute Permission to startup.sh & shutdown.sh
+Create link files for Tomcat Server up and Down
+Change Settings to Manage Tomcat
+Update user information in tomcat-users.xml
+Install Java
+yum install java-1.8*
+Install Tomcat
+sudo su -
+
+cd /
+
+cd /opt
+
+#Download tomcat binary
+wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.106/bin/apache-tomcat-9.0.106.tar.gz
+
+#unzip tomcat binary
+tar -zvxf apache-tomcat-9.0.55.tar.gz
+Add Execute Permission to startup.sh & shutdown.sh
+cd apache-tomcat-9.0.55
+
+cd bin
+
+chmod +x startup.sh
+chmod +x shutdown.sh
+Create link files for Tomcat Server up and Down
+ln -s /opt/apache-tomcat-9.0.55/bin/startup.sh /usr/local/bin/tomcatup
+ln -s /opt/apache-tomcat-9.0.55/bin/shutdown.sh /usr/local/bin/tomcatdown
+tomcatup
+Change Settings to Manage Tomcat
+cd apache-tomcat-9.0.55
+find -name context.xml
+./conf/context.xml
+./webapps/examples/META-INF/context.xml
+./webapps/host-manager/META-INF/context.xml
+./webapps/manager/META-INF/context.xml
+#comment value tag sections in below all files
+vi ./webapps/examples/META-INF/context.xml
+vi ./webapps/host-manager/META-INF/context.xml
+vi ./webapps/manager/META-INF/context.xml
+#######################
+Update user information in tomcat-users.xml
+cd apache-tomcat-9.0.55
+cd conf
+
+vi tomcat-users.xml
+
+#Add below lines between <tomcat-users> tag
+
+<role rolename="manager-gui"/>
+<role rolename="manager-script"/>
+<role rolename="manager-jmx"/>
+<role rolename="manager-status"/>   
+<user username="admin" password="admin" roles="manager-gui,manager-script,manager-jmx,manager-status"/>
+<user username="deployer" password="deployer" roles="manager-script"/>
+<user username="tomcat" password="s3cret" roles="manager-gui"/>
+###########################
+Access Tomcat Web Interface
+http://server_ip:8080/
+
+You should see Tomcat welcome page.
