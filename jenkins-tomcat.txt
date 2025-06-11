@@ -1,3 +1,4 @@
+usermod -aG <groupname> <username>
 LiNUX
 ques.Create the following users,groups and group membership
 -A group named sysadm
