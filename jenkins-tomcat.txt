@@ -1,3 +1,35 @@
+LiNUX
+ques.Create the following users,groups and group membership
+-A group named sysadm
+-A user "harry" who belongs to sysadm as a secondary group.
+-A user "natasha" who belongs to sysadm as a secondary group.
+-A user "sarah" who does not have the access to an interactive shell and who is not a member of sysadm group.
+-"harry" "natasha"  and "sarah" should all have password of password 
+SOl:-
+cat /etc/group
+groupadd sysadm
+cat /etc/group/ -i sysadm
+useradd harry
+passwd harry same for natasha and sarah
+usermod -G sysadm harry
+usermod -G sysadm natasha
+usermod -s /sbin/nologin sarah
+####################################################################################################################
+ques.create a collabrative directory /shared/sysadm with th following characteristics:
+-Group owernship of /shared/sysadm is sysadm
+-The directory should be readable , writable and accesiable to member of sysadm . but not to any other user.
+-Files created in /shared/sysadm automatically have group owernshipset to the sysadm group
+sol:-
+mkdir -p /shared/sysadm
+ll -d /shared/sysadm
+chgrp sysadm /shared/sysadm
+ll -d /shared/syadm
+chmod 770 /shared/sysadm
+ll -d /shared/syadm
+chmod g+s /shared/sysadm
+su -harry
+cd /shared/sysadm
+ll touch harry-file
 ###########################################################################################################################
 git server, client1 , client2
 #########
@@ -59,6 +91,8 @@ sudo systemctl enable jenkins
 sudo systemctl start jenkins
 http://your_amazon_linux_instance_ip:8080
 cat /var/lib/jenkins/secrets/initialAdminPassword
+
+#####################################################################
 
 ########################################################################
 tomcat
