@@ -49,5 +49,16 @@ sudo chmod 640 /etc/passwd-s3fs
 ########################
 for mounting s3 bucket
 
-s3fs BUCKET-NAME /mnt -o passwd_file=/etc/passwd-s3fs
+#########IMPORTANT STEP########################
+s3fs BUCKET-NAME /mnt -o passwd_file=/etc/passwd-s3fs                ####IMPORTANT#####
+
 df -h
+cd /mnt
+ll
+you will see the files created in your bucket 
+now create the file in instance that will reflect in bucket
+
+touch dev.txt
+
+go to the bucket settings properties and static web hosting  enable
+copy website endpoint link and paste in browser 
