@@ -1,0 +1,57 @@
+EFS ACROSS 3 INSTANCES
+
+STEP1 : Create 3 instances with aws-linux,redhat,ubantu with different subnet
+STEP2 : create efs file system name - myefs ,VPC : default -------- create
+STEP3 : connect all the instances through cmd
+***in Linux
+sudo su -
+hostnamectl set-hostname linux.example.com
+bash
+yum install nfs-utils -y
+systemctl enable nfs-server
+systemctl start nfs-server
+systemctl restart nfs-server
+mkdir efs
+
+
+***in redhat
+sudo su -
+hostnamectl set-hostname redhat.example.com
+bash
+yum install nfs-utils -y
+systemctl enable nfs-server
+systemctl start nfs-server
+systemctl restart nfs-server
+mkdir efs
+
+
+***in ubantu
+sudo -i
+hostnamectl set-hostname ubantu.example.com
+bash
+apt install nfs-common
+systemctl status nfs-common.service
+mkdir efs
+
+
+
+
+
+STEP4 : goto the aws file system attach select mount via ip option and select the subnet you have given to that particular instance and copy the code and paste in cmd respective instance 
+
+df -h
+
+cd /root/efs
+
+touch index.txt{1..20}
+
+then move to other instances and copy code and paste and goto the efs folder all the created files has to be visible 
+
+STEP5 : if you want restrict any instance go to filesystem and select network and remove the subnet of particular instance that will be restricted 
+to see go to the folder in apart of removed instance create new file and come to the restricted instance and goto the folder type ll
+old files visible but new files not visible 
+
+
+
+
+ 
