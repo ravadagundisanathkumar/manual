@@ -1,0 +1,23 @@
+VPC
+STEP-1 : create VPC 
+         name tag:"MyVPC" 
+         IPV4 CIDR Block :10.0.0.0/16 
+         leave others default -----create
+STEP-2 : Create subnets
+         you need to create 2 subnets
+         PUBLIC SUBNET
+         name : PublicSubnet
+         VPC ID : MyVPC
+         CIDR block : 10.0.1.0/24
+         Availability Zone : select 1a  --------create subnet
+         PRIVATE SUBNET
+         name : PrivateSubnet
+         VPC ID : MyVPC
+         CIDR block : 10.0.2.0/24
+         Availability Zone : select 1b -----------create subnet
+STEP-3 : Create and Attach Internet Gateway(IGW)
+         Name : MyIGW -------- create internet gate way
+         Attach to VPC : MyVPC
+STEP-4 : Create Route Tables and Configure
+         *PUBLIC ROUTE TABLE
+         VPC -- 
