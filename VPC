@@ -115,6 +115,7 @@ vim index.html
 copy ip address and paste in browser your index.html has to be visible  [in inbound rules add http ]
 vim sanath.pem 
 copy and paste key value 
+chmod 400 sanath.pem
 now connect the instance private through the instance public 
 sudo su -
 ping google.com
