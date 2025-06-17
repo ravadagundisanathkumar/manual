@@ -1,0 +1,12 @@
+sudo su -
+useradd jack
+passwd jack
+cat /etc/passwd
+whereis useradd
+vim /etc/sudoers
+in the file add line 
+Jack all=all path paste
+in jack sudo useradd barbosa
+
+
+usermod -aG groupname username
