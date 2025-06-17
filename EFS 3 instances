@@ -34,14 +34,19 @@ systemctl status nfs-common.service
 mkdir efs
 
 
-
+allow nfs port on 3 servers (2049)
+create a new security group 
+name : efs1-sg 
+in inbound ruls allow nfs port 
+change the security group fof 1a , 1b regions
+path : efs < file system < my-efs< network < change from default to efs1-sg
 
 
 STEP4 : goto the aws file system attach select mount via ip option and select the subnet you have given to that particular instance and copy the code and paste in cmd respective instance 
 
 df -h
 
-cd /root/efs
+cd /efs
 
 touch index.txt{1..20}
 
