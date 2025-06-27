@@ -160,6 +160,8 @@ vi tomcat-users.xml
 <user username="deployer" password="deployer" roles="manager-script"/>
 <user username="tomcat" password="s3cret" roles="manager-gui"/>
 ###########################
+
+./startup.sh
 Access Tomcat Web Interface
 http://server_ip:8080/
 
