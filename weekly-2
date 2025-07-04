@@ -1,0 +1,59 @@
+yum install docker*
+systemctl enable docker
+systemctl start docker
+docker pull nginx
+docker run -itd --name sanath -p 8080:80 nginx
+docker ps -a
+
+paste http://public_ip:8080
+in browser it will open default nginx page
+
+
+if not 
+docker start sanath                   [container_name]
+docker exec -it sanath bash
+
+now check in browser again 
+
+if you want to edit default page 
+ls
+cd /usr
+ls
+cd share
+ls
+cd nginx
+ls
+cat html
+cd html
+ls
+cat index.html
+echo "this my server" > index.html
+cat index.html
+
+docker attach name/id
+#################################################################################
+
+provider "aws" {
+  region     = "us-east-1"
+  access_key = "keys"
+  secret_key = "huy"
+}
+
+resource "aws_instance" "web" {
+  ami                    = "ami-05ffe3c48a9991133"
+  instance_type          = "t2.micro"
+  key_name               = "lti-mahape-key"
+  availability_zone      = "us-east-1a"
+  vpc_security_group_ids = [data.aws_security_group.previous-sg.id]
+  user_data = <<-EOF
+        #!/bin/bash
+        sudo yum install httpd -y
+        sudo systemctl start httpd
+        sudo systemctl enable httpd
+        echo "<h1>sample webserver using terraform</h1>" | sudo tee /var/www/html/index.html
+  EOF
+}
+data "aws_security_group" "previous-sg" {
+  id = "sg-0337b5cfbde743076" #existing security group id
+}
+
