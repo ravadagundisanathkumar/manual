@@ -1,0 +1,66 @@
+yum install docker*
+systemctl enable docker
+systemctl start docker
+docker info 
+docker ps -a
+docker image ls
+docker --help
+docker pull ubuntu
+docker pull httpd 
+docker run -it --name web-app -p 8080:8080 ubuntu /bin/bash
+apt update -y
+apt install apache2 -y
+cd /var/www/html
+echo "this is web" > index.html
+service apache2 start
+    (ctrl p ctrl q ) to come out
+ curl http://(ip of the instance)
+ docker inspect web-app | less     #(get ip from here)
+ 
+  docker run -it --name web-app1 -p 8081:8080 ubuntu /bin/bash
+    apt update -y
+    apt install apache2 -y
+    cd /var/www/html
+    echo "this is web1" > index.html
+    service apache2 start
+    (ctrl p ctrl q ) to come out
+ curl http://(ip of the instance)
+ 
+ docker stop web-app
+ docker rm web-app
+
+ docker kill web-app
+ docker rm web-app
+
+
+ creating volume 
+  docker volume create my-vol
+   docker volume ls
+   docker run -it -v my-vol:/var/www/html -p 8083:80 --name vol1 ubuntu /bin/bash
+      apt update -y
+     apt install apache2 -y  
+    cd /var/www/html
+       echo "this is vol" > index.html
+       cd
+     service apache2 start
+     ctrlp + ctrl Q
+      cd /var/lib/docker/volumes
+      ll
+       docker stop vol1
+     docker rm vol1
+     docker run -it -v my-vol:/var/www/html --name vol2 ubuntu /bin/bash
+     cd /var/www/html
+      ll
+     cat index.html
+
+
+ files ---------
+  mkdir /data
+  docker run -it -v /data/:/tmp --name copying ubuntu /bin/bash
+  cd /tmp
+   touch data1.txt{1..5}
+   cd
+   ctrlP+ctrlq
+   cd /data
+   ll
+ (all files will be visible )
